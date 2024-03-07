@@ -8,6 +8,14 @@ export default [
         }
     },
     {
+        path: '/products/create',
+        name: 'productCreate',
+        component: () => import('../views/products/CreateProductView.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
         path: '/products/:id',
         name: 'productDetail',
         component: () => import('../views/products/ProductDetailView.vue'),
@@ -15,4 +23,5 @@ export default [
             requiresAuth: true
         }
     }
+    
 ]

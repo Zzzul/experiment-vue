@@ -1,24 +1,22 @@
 <script setup>
-import { useCounterStore } from '@/stores/counter'
 import { useProductStore } from '@/stores/product'
 import Nav from '@/components/Nav.vue'
 import { onMounted } from 'vue'
 
-const counter = useCounterStore()
 const productStore = useProductStore()
 
-onMounted(() => {
-    productStore.getProducts()
-})
+onMounted(() => productStore.getProducts())
 </script>
 
 <template>
     <div class="product">
         <Nav />
 
-        {{ counter.count }}
-
         <button @click="productStore.getProducts">Get Products</button>
+        <br>
+        <button>
+            <router-link to="/products/create">Create</router-link>
+        </button>
 
         <table>
             <tr>
@@ -31,6 +29,8 @@ onMounted(() => {
                 <td>{{ product.price }}</td>
                 <td>
                     <router-link :to="`/products/${product.id}`">Detail</router-link>
+
+                    <button @click="productStore.deleteProduct(product.id)">Delete</button>
                 </td>
             </tr>
         </table>

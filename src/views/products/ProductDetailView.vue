@@ -7,9 +7,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const productStore = useProductStore()
 
-onMounted(() => {
-    productStore.getProductById(router.currentRoute.value.params.id)
-})
+onMounted(() => productStore.getProductById(router.currentRoute.value.params.id))
 
 </script>
 

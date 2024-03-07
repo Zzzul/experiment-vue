@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { defineStore } from 'pinia'
+import { defineStore, acceptHMRUpdate } from 'pinia'
 import { useApi, useApiToken } from '@/utils/axios'
 import { useRouter } from 'vue-router'
 import ls from '@/utils/secure-ls'
@@ -62,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
                 console.error(error)
                 token.value = null
                 user.value = null
-                
+
                 ls.remove('token')
                 ls.remove('user')
 
@@ -80,11 +80,16 @@ export const useAuthStore = defineStore('auth', () => {
     const logout = () => {
         token.value = null
         user.value = null
+        redirectRoute.value = null
         ls.remove('token')
         ls.remove('user')
+        ls.remove('redirectRoute')
 
         router.push({ name: 'login' })
     }
 
     return { user, token, login, getProfile, logout, checkAuthStatus }
 })
+
+
+if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot))
