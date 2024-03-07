@@ -43,6 +43,9 @@ router.beforeEach((to, from, next) => {
     next('/');
   } else if (to.meta.requiresAuth && !credential && !requiresGuestPath.includes(to.path)) {
     // Jika halaman memerlukan auth tapi credential tidak tersedia dan bukan merupakan rute yang memerlukan tamu, arahkan ke halaman login
+
+    ls.set('redirectRoute', to.fullPath);
+
     next('/login');
   } else {
     // Lanjutkan navigasi ke halaman yang diminta
