@@ -16,10 +16,10 @@ const useApiToken = axios.create({
 })
 
 useApiToken.interceptors.request.use(async (config) => {
-    const token = await ls.get('token'); // Menunggu token tersedia
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
+    const token = await ls.get('token') // Menunggu token tersedia
+
+    if (token) config.headers.Authorization = `Bearer ${token}`
+
     return config;
 }, error => {
     return Promise.reject(error);

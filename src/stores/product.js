@@ -10,7 +10,7 @@ export const useProductStore = defineStore('product', () => {
     const router = useRouter()
 
     const defaultFormProduct = {
-        title: null,
+        title: '',
     }
     
     const products = ref([])
@@ -67,15 +67,19 @@ export const useProductStore = defineStore('product', () => {
     const saveProduct = async () => {
         authStore.checkAuthStatus()
 
-        await useApiToken.post('/products/add', JSON.stringify(formProduct.value))
-            .then(() => {
-                clear()
+        try {
+            await useApiToken.post('/products/add', JSON.stringify(formProduct.value))
 
-                router.push({ name: 'products' })
-            })
-            .then((error) => {
-                console.error(error)
-            })
+            console.log('clear save')
+
+            // Membersihkan data formProduct
+            clear()
+            // Navigasi ke halaman "Products" setelah berhasil menyimpan produk
+            router.push({ name: 'products' })
+        } catch (error) {
+            console.error(error)
+            clear()
+        }
     }
 
     const editProduct = async (id) => {
@@ -105,7 +109,9 @@ export const useProductStore = defineStore('product', () => {
     const clear = () => {    
         formProduct.value = defaultFormProduct
 
-        ls.set('formProduct', JSON.stringify(defaultFormProduct))
+        ls.remove('formProduct')
+
+        console.log('clear')
     }
 
     return { products, product, getProducts, getProductById, saveProduct, formProduct, clear, editProduct, deleteProduct }

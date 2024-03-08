@@ -14,7 +14,7 @@ onMounted(() => productStore.getProductById(router.currentRoute.value.params.id)
 <template>
     <div class="product-detail">
         <Nav />
-        <p>Product Detail</p>
+        <h4>Product Detail</h4>
 
         <table style="border-collapse: collapse; border: 1px solid black;" v-if="productStore?.product">
             <tr>
@@ -52,5 +52,13 @@ onMounted(() => productStore.getProductById(router.currentRoute.value.params.id)
                 </td>
             </tr>
         </table>
+
+        <button @click="productStore.deleteProduct(productStore?.product?.id)" v-if="productStore?.product">Delete</button>
+        
+        <div v-if="!productStore.product">
+            <p style="color: red;">Product not found</p>
+
+            <router-link to="/products">Go Back</router-link>
+        </div>
     </div>
 </template>
