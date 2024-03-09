@@ -1,6 +1,9 @@
 <script setup>
 import { useCounterStore } from '@/stores/counter'
 import Nav from '@/components/Nav.vue'
+import Menu from '@/components/Menu.vue'
+import Input from '@/components/Input.vue'
+import Button from "primevue/button"
 
 const counter = useCounterStore()
 </script>
@@ -9,9 +12,15 @@ const counter = useCounterStore()
   <main>
     <Nav/>
 
+    <Menu/>
+
     {{ counter.count }}
 
+    <Input/>
+
     <button @click="counter.increment">Increment</button>
+
+    <Button>PrimeVue</Button>
 
     <br>
 
